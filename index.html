@@ -1,895 +1,548 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>供應鏈管理系 課程學習地圖 — NKUST SCM</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --bg:#09090b;
-  --bg-soft:#111827;
-  --surface:rgba(255,255,255,.08);
-  --surface-2:rgba(255,255,255,.05);
-  --line:rgba(255,255,255,.12);
-  --line-strong:rgba(255,255,255,.18);
-  --text:#f8fafc;
-  --muted:#a1a1aa;
-  --brand:#7c3aed;
-  --brand-2:#06b6d4;
-  --brand-3:#f472b6;
-  --success:#34d399;
-  --amber:#fbbf24;
-  --radius:24px;
-  --shadow:0 20px 80px rgba(0,0,0,.35);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  min-height:100vh;
-  font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(124,58,237,.25), transparent 28%),
-    radial-gradient(circle at 85% 10%, rgba(6,182,212,.18), transparent 22%),
-    radial-gradient(circle at 50% 100%, rgba(244,114,182,.16), transparent 30%),
-    linear-gradient(180deg, #050816 0%, #09090b 52%, #0a1020 100%);
+#scm-cm-wrap{
+  --bg:#F4F7FB;
+  --card:#FFFFFF;
+  --line:#E1E8F0;
+  --line-soft:#EDF1F7;
+  --text:#1A2540;
+  --muted:#707B8C;
+  --navy:#1F3864;
+  --navy-deep:#14213D;
+  --steel:#2E74B5;
+  --amber:#C9972B;
+  --radius:16px;
+  --shadow:0 6px 20px rgba(20,33,61,.07);
+  font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',sans-serif;
   color:var(--text);
-  overflow-x:hidden;
+  background:var(--bg);
+  padding:28px 16px 56px;
 }
-body::before{
-  content:"";
-  position:fixed; inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-  background-size:44px 44px;
-  mask-image:radial-gradient(circle at center, black 42%, transparent 88%);
-  pointer-events:none;
-}
-.page-shell{
-  position:relative;
-  max-width:1240px;
-  margin:0 auto;
-  padding:34px 24px 72px;
-}
-.page-shell::before{
-  content:"";
-  position:absolute;
-  top:70px; left:-60px;
-  width:280px; height:280px;
-  background:radial-gradient(circle, rgba(124,58,237,.28), transparent 70%);
-  filter:blur(16px);
-  pointer-events:none;
-}
-.page-shell::after{
-  content:"";
-  position:absolute;
-  top:180px; right:-50px;
-  width:260px; height:260px;
-  background:radial-gradient(circle, rgba(6,182,212,.18), transparent 72%);
-  filter:blur(18px);
-  pointer-events:none;
-}
-.back-link{
-  position:relative;
-  z-index:2;
-  display:inline-flex; align-items:center; gap:8px;
-  padding:10px 14px;
-  margin-bottom:18px;
-  border:1px solid var(--line);
-  border-radius:999px;
-  text-decoration:none;
-  color:#d4d4d8;
-  font-size:12px;
-  letter-spacing:.08em;
-  background:rgba(255,255,255,.04);
-  backdrop-filter:blur(14px);
-  transition:.25s ease;
-}
-.back-link:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.24); background:rgba(255,255,255,.08)}
-.card-wrap{
-  position:relative;
-  isolation:isolate;
-  background:linear-gradient(180deg, rgba(15,23,42,.84), rgba(9,9,11,.9));
-  border:1px solid var(--line);
-  border-radius:32px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  padding:0 30px 38px;
-}
-.card-wrap::before{
-  content:"";
-  position:absolute; inset:0;
-  background:
-    radial-gradient(circle at top center, rgba(255,255,255,.09), transparent 28%),
-    linear-gradient(135deg, rgba(255,255,255,.06), transparent 18%, transparent 82%, rgba(255,255,255,.04));
-  pointer-events:none;
-}
-.card-wrap::after{
-  content:"";
-  position:absolute;
-  inset:1px;
-  border-radius:31px;
-  border:1px solid rgba(255,255,255,.04);
-  pointer-events:none;
-}
-#scm-cm{position:relative; z-index:1; font-size:14px; line-height:1.6; color:#e4e4e7}
+#scm-cm-wrap *{box-sizing:border-box}
+#scm-cm-wrap .scm-shell{max-width:1180px;margin:0 auto}
 
-.magic-hero{
-  position:relative;
-  padding:34px 0 22px;
-}
-.hero-badges{
-  display:flex; flex-wrap:wrap; gap:10px;
-  justify-content:center;
-  margin-bottom:18px;
-}
-.hero-badge{
-  padding:8px 14px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.13);
-  background:rgba(255,255,255,.05);
-  color:#e4e4e7;
-  font-size:12px; letter-spacing:.08em;
-  backdrop-filter:blur(12px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
-}
-.hero-badge strong{color:#fff}
-.magic-spotlight{
-  position:absolute;
-  left:50%; top:6px;
-  transform:translateX(-50%);
-  width:min(760px,92%);
-  height:260px;
-  border-radius:999px;
-  background:
-    radial-gradient(circle at center, rgba(255,255,255,.22) 0%, rgba(124,58,237,.24) 20%, rgba(6,182,212,.14) 42%, transparent 72%);
-  filter:blur(26px);
-  opacity:.9;
-  pointer-events:none;
-}
-.magic-spotlight::after{
-  content:"";
-  position:absolute;
-  inset:20% 12% auto;
-  height:120px;
-  border-radius:999px;
-  background:radial-gradient(circle at center, rgba(255,255,255,.22), transparent 70%);
-  filter:blur(30px);
-}
-#scm-cm .scm-header{
-  position:relative;
+/* ---------- Hero ---------- */
+#scm-cm-wrap .scm-hero{
+  background:linear-gradient(135deg,var(--navy-deep),var(--navy));
+  border-radius:20px;
+  padding:36px 28px 30px;
   text-align:center;
-  padding:48px 0 24px;
-  margin-bottom:0;
+  margin-bottom:22px;
 }
-#scm-cm .scm-header::after{
-  content:"";
-  display:block;
-  width:100%;
-  height:1px;
-  margin-top:24px;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
+#scm-cm-wrap .hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:16px}
+#scm-cm-wrap .hero-badge{
+  padding:6px 14px;border-radius:999px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  color:#DCE6F5;font-size:12px;letter-spacing:.04em;
 }
-#scm-cm .scm-header-title{
-  font-size:clamp(30px,4vw,52px);
-  font-weight:900;
-  line-height:1.08;
-  letter-spacing:.04em;
-  color:#fff;
-  text-shadow:0 4px 40px rgba(124,58,237,.35);
+#scm-cm-wrap .hero-badge strong{color:#fff}
+#scm-cm-wrap .scm-title{
+  font-size:clamp(24px,3.4vw,36px);
+  font-weight:900;color:#fff;line-height:1.25;
 }
-#scm-cm .scm-header-title .grad{
-  background:linear-gradient(90deg,#ffffff 10%, #d8b4fe 45%, #67e8f9 95%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-#scm-cm .scm-header-sub{
-  margin-top:12px;
-  font-size:12px;
-  color:#cbd5e1;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-}
-.hero-desc{
-  max-width:760px;
-  margin:14px auto 0;
-  text-align:center;
-  color:#a1a1aa;
-  font-size:14px;
+#scm-cm-wrap .scm-title .accent{color:var(--amber)}
+#scm-cm-wrap .scm-sub{
+  margin-top:8px;font-size:12.5px;color:#A9BEDD;
+  letter-spacing:.16em;text-transform:uppercase;
 }
 
-.marquee{
-  position:relative;
-  overflow:hidden;
-  border:1px solid var(--line);
-  border-radius:999px;
-  background:rgba(255,255,255,.04);
-  margin:12px 0 26px;
-  padding:10px 0;
-}
-.marquee::before,.marquee::after{
-  content:"";
-  position:absolute; top:0; bottom:0; width:70px; z-index:2;
-}
-.marquee::before{left:0; background:linear-gradient(90deg, rgba(9,9,11,1), transparent)}
-.marquee::after{right:0; background:linear-gradient(270deg, rgba(9,9,11,1), transparent)}
-.marquee-track{
-  display:flex; width:max-content;
-  gap:12px;
-  animation:marquee 24s linear infinite;
-}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-item{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:0 14px;
-  font-size:12px; color:#e5e7eb; white-space:nowrap;
-}
-.marquee-dot{
-  width:6px; height:6px; border-radius:50%;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  box-shadow:0 0 16px rgba(124,58,237,.5);
-}
-
-#scm-cm .scm-tabs{
-  position:relative;
-  display:flex; gap:10px;
-  width:max-content;
-  max-width:100%;
-  margin:0 auto 28px;
-  padding:8px;
-  border:1px solid var(--line);
-  border-radius:999px;
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(18px);
+/* ---------- Tabs ---------- */
+#scm-cm-wrap .scm-tabs{
+  display:flex;gap:8px;width:max-content;max-width:100%;
+  margin:22px auto 24px;padding:6px;
+  border:1px solid var(--line);border-radius:999px;
+  background:var(--card);box-shadow:var(--shadow);
   overflow:auto;
 }
-#scm-cm .scm-tab{
-  position:relative;
-  padding:12px 20px;
-  min-width:180px;
-  border:none;
-  border-radius:999px;
-  background:transparent;
-  color:#cbd5e1;
-  font-size:14px;
-  font-weight:800;
-  letter-spacing:.04em;
-  cursor:pointer;
-  transition:.25s ease;
+#scm-cm-wrap .scm-tab{
+  padding:11px 22px;min-width:170px;border:none;border-radius:999px;
+  background:transparent;color:var(--muted);
+  font-size:14px;font-weight:700;cursor:pointer;transition:.2s ease;
+  font-family:inherit;
 }
-#scm-cm .scm-tab:hover{color:#fff}
-#scm-cm .scm-tab.active{
-  color:#fff;
-  background:linear-gradient(135deg, rgba(124,58,237,.88), rgba(6,182,212,.68));
-  box-shadow:0 8px 30px rgba(124,58,237,.28), inset 0 1px 0 rgba(255,255,255,.18);
+#scm-cm-wrap .scm-tab:hover{color:var(--navy)}
+#scm-cm-wrap .scm-tab.active{color:#fff;background:var(--steel);box-shadow:0 4px 14px rgba(46,116,181,.35)}
+
+#scm-cm-wrap .scm-panel{display:none}
+#scm-cm-wrap .scm-panel.active{display:block;animation:scm-fade .35s ease}
+@keyframes scm-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------- Stat bar ---------- */
+#scm-cm-wrap .scm-cbar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+#scm-cm-wrap .scm-cbar-item{
+  position:relative;padding:16px 18px 14px;padding-left:22px;
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--card);box-shadow:var(--shadow);overflow:hidden;
+}
+#scm-cm-wrap .scm-cbar-item::before{content:"";position:absolute;inset:0 auto 0 0;width:5px}
+#scm-cm-wrap .scm-cn{font-size:30px;font-weight:900;line-height:1;color:var(--navy)}
+#scm-cm-wrap .scm-cl{font-size:12px;color:var(--muted);margin-top:8px;font-weight:600}
+#scm-cm-wrap .cb-total::before{background:var(--navy)}
+#scm-cm-wrap .cb-blue::before{background:#2E74B5}
+#scm-cm-wrap .cb-green::before{background:#3A7D44}
+#scm-cm-wrap .cb-amber::before{background:#C9972B}
+
+/* ---------- Section label ---------- */
+#scm-cm-wrap .scm-sec{
+  display:flex;align-items:center;gap:10px;
+  margin:30px 0 14px;font-size:14px;font-weight:800;
+  letter-spacing:.06em;color:var(--navy);
+}
+#scm-cm-wrap .scm-sec::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--amber);flex-shrink:0}
+#scm-cm-wrap .scm-sec::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ---------- Grids ---------- */
+#scm-cm-wrap .scm-yr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+#scm-cm-wrap .scm-elec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+#scm-cm-wrap .scm-must-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#scm-cm-wrap .scm-career-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+
+/* ---------- Cards ---------- */
+#scm-cm-wrap .scm-card{
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--card);box-shadow:var(--shadow);overflow:hidden;
+}
+#scm-cm-wrap .scm-card-head{
+  padding:12px 16px;font-size:13.5px;font-weight:800;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--line-soft);
+}
+#scm-cm-wrap .scm-hd{width:8px;height:8px;border-radius:999px;flex-shrink:0}
+#scm-cm-wrap .scm-card-body{padding:10px 16px 14px}
+#scm-cm-wrap .scm-ci{
+  display:flex;align-items:center;gap:6px;padding:8px 0;
+  border-bottom:1px dashed var(--line-soft);
+  color:var(--text);font-size:13.5px;
+}
+#scm-cm-wrap .scm-ci:last-child{border-bottom:none}
+#scm-cm-wrap .scm-cr{
+  margin-left:auto;flex-shrink:0;padding:2px 9px;border-radius:999px;
+  font-size:10.5px;font-weight:800;color:#fff;background:var(--steel);
 }
 
-#scm-cm .scm-panel{display:none}
-#scm-cm .scm-panel.active{display:block; animation:fadeUp .4s ease}
+/* category colour tints (background/text on card-head, credit-badge colour) */
+#scm-cm-wrap .yr1 .scm-card-head{background:#EAF2FB;color:#1F3864}
+#scm-cm-wrap .yr1 .scm-hd,#scm-cm-wrap .yr1 .scm-cr{background:#2E74B5}
+#scm-cm-wrap .yr2 .scm-card-head{background:#EAF6EE;color:#1F5C33}
+#scm-cm-wrap .yr2 .scm-hd,#scm-cm-wrap .yr2 .scm-cr{background:#3A7D44}
+#scm-cm-wrap .yr3 .scm-card-head{background:#FBF3E3;color:#8A5A12}
+#scm-cm-wrap .yr3 .scm-hd,#scm-cm-wrap .yr3 .scm-cr{background:#C9972B}
+#scm-cm-wrap .yr4 .scm-card-head{background:#F2EDFB;color:#4A2E82}
+#scm-cm-wrap .yr4 .scm-hd,#scm-cm-wrap .yr4 .scm-cr{background:#6A4C93}
 
-#scm-cm .scm-cbar{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-bottom:28px;
-  border:none;
-  overflow:visible;
-}
-#scm-cm .scm-cbar-item{
-  position:relative;
-  text-align:left;
-  padding:16px 18px 14px;
-  border:1px solid var(--line);
-  border-right:none;
-  border-radius:20px;
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(14px);
-  overflow:hidden;
-}
-#scm-cm .scm-cbar-item::before{
-  content:"";
-  position:absolute; inset:0 auto 0 0; width:4px;
-  background:linear-gradient(180deg,var(--brand),var(--brand-2));
-  opacity:.8;
-}
-#scm-cm .scm-cn{font-size:28px;font-weight:900;line-height:1;color:#fff}
-#scm-cm .scm-cl{font-size:12px;color:#a1a1aa;margin-top:8px}
-#scm-cm .cb-total .scm-cn{color:#fff}
-#scm-cm .cb-blue .scm-cn{color:#bfdbfe}
-#scm-cm .cb-green .scm-cn{color:#a7f3d0}
-#scm-cm .cb-amber .scm-cn{color:#fde68a}
+#scm-cm-wrap .dom-info .scm-card-head{background:#EAF2FB;color:#1F3864}
+#scm-cm-wrap .dom-logi .scm-card-head{background:#EAF6EE;color:#1F5C33}
+#scm-cm-wrap .dom-fin  .scm-card-head{background:#FBF3E3;color:#8A5A12}
+#scm-cm-wrap .dom-com  .scm-card-head{background:#F2EDFB;color:#4A2E82}
+#scm-cm-wrap .dom-mfg  .scm-card-head{background:#FBEEE3;color:#7A3B12}
+#scm-cm-wrap .dom-aqua .scm-card-head{background:#E7F5F5;color:#0E5C5C}
+#scm-cm-wrap .dom-semi .scm-card-head{background:#EEF1F5;color:#3A4356}
+#scm-cm-wrap .dom-res  .scm-card-head{background:#FBF6DE;color:#7A5D06}
 
-#scm-cm .scm-sec{
-  display:flex; align-items:center; gap:12px;
-  margin:30px 0 16px;
-  font-size:12px; font-weight:800; letter-spacing:.2em;
-  color:#cbd5e1;
-  text-transform:uppercase;
+/* ---------- Career path cards ---------- */
+#scm-cm-wrap .scm-career-head{
+  padding:14px 10px;text-align:center;font-size:12.5px;font-weight:800;line-height:1.55;
+  border-bottom:1px solid var(--line-soft);
 }
-#scm-cm .scm-sec::before{
-  content:"";
-  width:10px; height:10px; border-radius:50%;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  box-shadow:0 0 20px rgba(124,58,237,.6);
-}
-#scm-cm .scm-sec::after{
-  content:""; flex:1; height:1px;
-  background:linear-gradient(90deg, rgba(255,255,255,.2), transparent);
-}
+#scm-cm-wrap .scm-career-body{padding:10px 12px 14px}
+#scm-cm-wrap .scm-cc{font-size:12.5px;text-align:center;color:var(--text);padding:5px 0;border-bottom:1px dashed var(--line-soft)}
+#scm-cm-wrap .scm-cc:last-child{border-bottom:none}
+#scm-cm-wrap .ca0 .scm-career-head{background:#EAF2FB;color:#1F3864}
+#scm-cm-wrap .ca1 .scm-career-head{background:#EAF6EE;color:#1F5C33}
+#scm-cm-wrap .ca2 .scm-career-head{background:#FBF3E3;color:#8A5A12}
+#scm-cm-wrap .ca3 .scm-career-head{background:#F2EDFB;color:#4A2E82}
+#scm-cm-wrap .ca4 .scm-career-head{background:#FBEAEE;color:#7A1F3D}
+#scm-cm-wrap .ca5 .scm-career-head{background:#E7F5F5;color:#0E5C5C}
+#scm-cm-wrap .ca6 .scm-career-head{background:#E8F4FB;color:#155875}
+#scm-cm-wrap .ca7 .scm-career-head{background:#E9F7F0;color:#1E5E45}
 
-#scm-cm .scm-yr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-#scm-cm .scm-elec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-#scm-cm .scm-must-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-#scm-cm .scm-career-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+/* ---------- Arrow divider ---------- */
+#scm-cm-wrap .scm-arrow{display:flex;justify-content:center;align-items:center;gap:12px;margin:26px 0 6px}
+#scm-cm-wrap .scm-arrow span{font-size:13px;font-weight:800;color:var(--navy)}
+#scm-cm-wrap .scm-arr-wrap{display:flex;flex-direction:column;align-items:center}
+#scm-cm-wrap .scm-arr-line{width:2px;height:26px;background:var(--amber)}
+#scm-cm-wrap .scm-arr-head{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--amber)}
 
-#scm-cm .scm-card{
-  position:relative;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-  box-shadow:0 16px 40px rgba(0,0,0,.18);
-  transition:transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+/* ---------- Notes ---------- */
+#scm-cm-wrap .scm-note,#scm-cm-wrap .scm-note-teal{
+  position:relative;padding:18px 22px 18px 26px;margin-top:26px;border-radius:14px;
+  border:1px solid var(--line);background:#FBF6E9;overflow:hidden;
 }
-#scm-cm .scm-card::before{
-  content:"";
-  position:absolute;
-  inset:-1px;
-  border-radius:inherit;
-  padding:1px;
-  background:linear-gradient(130deg, rgba(255,255,255,.28), rgba(255,255,255,0), rgba(124,58,237,.35), rgba(6,182,212,.24));
-  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-          mask-composite:exclude;
-  pointer-events:none;
-  opacity:.65;
-}
-#scm-cm .scm-card::after{
-  content:"";
-  position:absolute; inset:auto -40% 0;
-  height:2px;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
-  box-shadow:0 0 18px rgba(255,255,255,.5);
-  animation:borderBeam 7s linear infinite;
-  opacity:.8;
-}
-#scm-cm .scm-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(255,255,255,.2);
-  box-shadow:0 20px 50px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.04) inset;
-}
-#scm-cm .scm-card-head{
-  position:relative;
-  padding:14px 16px;
-  font-size:13px;
-  font-weight:800;
-  display:flex; align-items:center; gap:8px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(16px);
-}
-#scm-cm .scm-hd{
-  width:9px;height:9px;border-radius:999px;flex-shrink:0;
-  box-shadow:0 0 18px currentColor;
-}
-#scm-cm .scm-card-body{padding:12px 16px 16px}
-#scm-cm .scm-ci{
-  display:flex; align-items:center; gap:6px;
-  padding:8px 0;
-  border-bottom:1px dashed rgba(255,255,255,.08);
-  color:#f4f4f5;
-  font-size:13px;
-}
-#scm-cm .scm-ci:last-child{border-bottom:none}
-#scm-cm .scm-cr{
-  margin-left:auto; flex-shrink:0;
-  padding:2px 8px;
-  border-radius:999px;
-  font-size:10px; font-weight:800; color:#fff;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(255,255,255,.1);
-  backdrop-filter:blur(10px);
-}
-#scm-cm .yr1 .scm-card-head{background:linear-gradient(135deg, rgba(37,99,235,.18), rgba(59,130,246,.08));color:#bfdbfe}
-#scm-cm .yr1 .scm-hd,#scm-cm .yr1 .scm-cr{background:linear-gradient(135deg,#2563eb,#38bdf8)}
-#scm-cm .yr2 .scm-card-head{background:linear-gradient(135deg, rgba(16,185,129,.18), rgba(45,212,191,.08));color:#a7f3d0}
-#scm-cm .yr2 .scm-hd,#scm-cm .yr2 .scm-cr{background:linear-gradient(135deg,#10b981,#2dd4bf)}
-#scm-cm .yr3 .scm-card-head{background:linear-gradient(135deg, rgba(245,158,11,.18), rgba(251,191,36,.08));color:#fde68a}
-#scm-cm .yr3 .scm-hd,#scm-cm .yr3 .scm-cr{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
-#scm-cm .yr4 .scm-card-head{background:linear-gradient(135deg, rgba(168,85,247,.18), rgba(244,114,182,.08));color:#e9d5ff}
-#scm-cm .yr4 .scm-hd,#scm-cm .yr4 .scm-cr{background:linear-gradient(135deg,#8b5cf6,#f472b6)}
+#scm-cm-wrap .scm-note-teal{background:#EAF6F5}
+#scm-cm-wrap .scm-note::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--amber)}
+#scm-cm-wrap .scm-note-teal::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:#1B7A8C}
+#scm-cm-wrap .scm-note p,#scm-cm-wrap .scm-note-teal p{font-size:13px;line-height:2;color:var(--text)}
+#scm-cm-wrap .scm-note strong,#scm-cm-wrap .scm-note-teal strong{color:var(--navy)}
 
-#scm-cm .dom-info .scm-card-head{background:linear-gradient(135deg, rgba(37,99,235,.18), rgba(59,130,246,.08)); color:#bfdbfe}
-#scm-cm .dom-logi .scm-card-head{background:linear-gradient(135deg, rgba(16,185,129,.18), rgba(52,211,153,.08)); color:#bbf7d0}
-#scm-cm .dom-fin .scm-card-head{background:linear-gradient(135deg, rgba(245,158,11,.18), rgba(251,191,36,.08)); color:#fde68a}
-#scm-cm .dom-com .scm-card-head{background:linear-gradient(135deg, rgba(168,85,247,.18), rgba(192,132,252,.08)); color:#e9d5ff}
-#scm-cm .dom-mfg .scm-card-head{background:linear-gradient(135deg, rgba(244,63,94,.18), rgba(251,113,133,.08)); color:#fecdd3}
-#scm-cm .dom-aqua .scm-card-head{background:linear-gradient(135deg, rgba(20,184,166,.18), rgba(45,212,191,.08)); color:#99f6e4}
-#scm-cm .dom-semi .scm-card-head{background:linear-gradient(135deg, rgba(148,163,184,.2), rgba(203,213,225,.08)); color:#e2e8f0}
-#scm-cm .dom-res .scm-card-head{background:linear-gradient(135deg, rgba(250,204,21,.18), rgba(234,179,8,.08)); color:#fef08a}
-
-#scm-cm .scm-career-head{
-  padding:14px 10px;
-  text-align:center;
-  font-size:12px;
-  font-weight:800;
-  line-height:1.6;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-#scm-cm .scm-career-body{padding:10px 12px 14px}
-#scm-cm .scm-cc{
-  font-size:12px; text-align:center; color:#f4f4f5;
-  padding:5px 0;
-  border-bottom:1px dashed rgba(255,255,255,.08);
-}
-#scm-cm .scm-cc:last-child{border-bottom:none}
-#scm-cm .ca0 .scm-career-head{background:linear-gradient(135deg, rgba(37,99,235,.18), rgba(59,130,246,.08)); color:#bfdbfe}
-#scm-cm .ca1 .scm-career-head{background:linear-gradient(135deg, rgba(16,185,129,.18), rgba(45,212,191,.08)); color:#bbf7d0}
-#scm-cm .ca2 .scm-career-head{background:linear-gradient(135deg, rgba(245,158,11,.18), rgba(251,191,36,.08)); color:#fde68a}
-#scm-cm .ca3 .scm-career-head{background:linear-gradient(135deg, rgba(168,85,247,.18), rgba(244,114,182,.08)); color:#e9d5ff}
-#scm-cm .ca4 .scm-career-head{background:linear-gradient(135deg, rgba(244,63,94,.18), rgba(251,113,133,.08)); color:#fecdd3}
-#scm-cm .ca5 .scm-career-head{background:linear-gradient(135deg, rgba(20,184,166,.18), rgba(45,212,191,.08)); color:#99f6e4}
-#scm-cm .ca6{box-shadow:0 16px 40px rgba(14,165,233,.12)}
-#scm-cm .ca6 .scm-career-head{background:linear-gradient(135deg, rgba(14,165,233,.26), rgba(59,130,246,.18)); color:#e0f2fe}
-#scm-cm .ca7{box-shadow:0 16px 40px rgba(16,185,129,.1)}
-#scm-cm .ca7 .scm-career-head{background:linear-gradient(135deg, rgba(20,184,166,.26), rgba(16,185,129,.18)); color:#ccfbf1}
-
-#scm-cm .scm-arrow{
-  display:flex; justify-content:center; align-items:center; gap:14px;
-  margin:22px 0 8px;
-}
-#scm-cm .scm-arrow span{
-  font-size:12px; letter-spacing:.12em; font-weight:700; color:#cbd5e1;
-}
-#scm-cm .scm-arr-wrap{display:flex;flex-direction:column;align-items:center}
-#scm-cm .scm-arr-line{
-  width:2px;height:30px;
-  background:linear-gradient(to bottom, rgba(124,58,237,.2), rgba(6,182,212,.95));
-  box-shadow:0 0 18px rgba(6,182,212,.25);
-}
-#scm-cm .scm-arr-head{
-  width:0;height:0;
-  border-left:7px solid transparent;border-right:7px solid transparent;border-top:10px solid #06b6d4;
-  filter:drop-shadow(0 0 10px rgba(6,182,212,.45));
-}
-
-#scm-cm .scm-note,
-#scm-cm .scm-note-teal{
-  position:relative;
-  padding:18px 22px;
-  margin-top:26px;
-  border-radius:22px;
-  border:1px solid var(--line);
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-  overflow:hidden;
-}
-#scm-cm .scm-note::before,
-#scm-cm .scm-note-teal::before{
-  content:"";
-  position:absolute; inset:0 auto 0 0; width:5px;
-  background:linear-gradient(180deg, var(--brand), var(--brand-2));
-}
-#scm-cm .scm-note p,#scm-cm .scm-note-teal p{
-  font-size:12px; line-height:2.05; color:#e4e4e7;
-}
-#scm-cm .scm-note strong,#scm-cm .scm-note-teal strong{color:#fff}
-
-.magic-footer-note{
-  text-align:center;
-  color:#71717a;
-  font-size:11px;
-  margin-top:18px;
-  letter-spacing:.08em;
-}
+#scm-cm-wrap .scm-footer-note{text-align:center;color:var(--muted);font-size:11px;margin-top:22px;letter-spacing:.06em}
 
 @media (max-width: 1100px){
-  #scm-cm .scm-yr-grid, #scm-cm .scm-career-grid{grid-template-columns:repeat(2,1fr)}
-  #scm-cm .scm-elec-grid{grid-template-columns:repeat(2,1fr)}
+  #scm-cm-wrap .scm-yr-grid, #scm-cm-wrap .scm-career-grid{grid-template-columns:repeat(2,1fr)}
+  #scm-cm-wrap .scm-elec-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width: 760px){
-  .page-shell{padding:18px 14px 50px}
-  .card-wrap{padding:0 16px 24px; border-radius:24px}
-  #scm-cm .scm-cbar{grid-template-columns:repeat(2,1fr)}
-  #scm-cm .scm-yr-grid, #scm-cm .scm-elec-grid, #scm-cm .scm-career-grid, #scm-cm .scm-must-row{grid-template-columns:1fr}
-  #scm-cm .scm-tab{min-width:152px; padding:11px 14px}
-  #scm-cm .scm-header{padding-top:34px}
-  .marquee::before,.marquee::after{width:34px}
+  #scm-cm-wrap{padding:18px 12px 40px}
+  #scm-cm-wrap .scm-hero{padding:28px 18px 24px}
+  #scm-cm-wrap .scm-cbar{grid-template-columns:repeat(2,1fr)}
+  #scm-cm-wrap .scm-yr-grid, #scm-cm-wrap .scm-elec-grid, #scm-cm-wrap .scm-career-grid, #scm-cm-wrap .scm-must-row{grid-template-columns:1fr}
+  #scm-cm-wrap .scm-tab{min-width:150px;padding:10px 14px;font-size:13px}
 }
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes borderBeam{0%{transform:translateX(-10%)}100%{transform:translateX(210%)}}
-@keyframes fadeUp{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
 </style>
 
-</head>
-<body>
-<div class="page-shell">
+<div id="scm-cm-wrap">
+  <div class="scm-shell">
 
-  
+    <div class="scm-hero">
+      <div class="hero-badges">
+        <div class="hero-badge">🎓 Curriculum Map</div>
+        <div class="hero-badge"><strong>NKUST SCM</strong></div>
+      </div>
+      <div class="scm-title"><span class="accent">供應鏈管理系</span> 課程學習地圖</div>
+      <div class="scm-sub">Department of Supply Chain Management · NKUST</div>
+    </div>
 
-  <div class="card-wrap">
-    <div id="scm-cm">
+    <!-- TABS -->
+    <div class="scm-tabs">
+      <button class="scm-tab active" onclick="scmTab(this,'scm-bsc')">🎓 四技（大學部）</button>
+      <button class="scm-tab" onclick="scmTab(this,'scm-msc')">📚 碩士</button>
+    </div>
 
-      <div class="magic-hero">
-        <div class="magic-spotlight"></div>
-        <div class="hero-badges">
-          <div class="hero-badge">🎓 Curriculum map</div>
-          <div class="hero-badge"><strong>NKUST SCM</strong></div>
+    <!-- ═══ 四技部 ═══ -->
+    <div id="scm-bsc" class="scm-panel active">
+
+      <div class="scm-cbar">
+        <div class="scm-cbar-item cb-total"><div class="scm-cn">128</div><div class="scm-cl">畢業總學分</div></div>
+        <div class="scm-cbar-item cb-blue"> <div class="scm-cn">28</div> <div class="scm-cl">校訂共同必修</div></div>
+        <div class="scm-cbar-item cb-green"><div class="scm-cn">64</div> <div class="scm-cl">系專業必修</div></div>
+        <div class="scm-cbar-item cb-amber"><div class="scm-cn">36</div> <div class="scm-cl">系專業選修</div></div>
+      </div>
+
+      <div class="scm-sec">系專業必修課程 · 64 學分</div>
+      <div class="scm-yr-grid">
+        <div class="scm-card yr1">
+          <div class="scm-card-head"><span class="scm-hd"></span>一年級</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">供應鏈概論<span class="scm-cr">3</span></div>
+            <div class="scm-ci">會計學<span class="scm-cr">3</span></div>
+            <div class="scm-ci">微積分<span class="scm-cr">3</span></div>
+            <div class="scm-ci">管理軟體概論<span class="scm-cr">3</span></div>
+            <div class="scm-ci">統計學<span class="scm-cr">3</span></div>
+            <div class="scm-ci">經濟學<span class="scm-cr">3</span></div>
+            <div class="scm-ci">生產與作業管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">作業研究<span class="scm-cr">3</span></div>
+            <div class="scm-ci">管理學（院共同必修）<span class="scm-cr">3</span></div>
+          </div>
         </div>
-
-        <div class="scm-header">
-          <div class="scm-header-title"><span class="grad">供應鏈管理系</span> 課程學習地圖</div>
-          <div class="scm-header-sub">Department of Supply Chain Management · NKUST</div>
+        <div class="scm-card yr2">
+          <div class="scm-card-head"><span class="scm-hd"></span>二年級</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">存貨管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">採購管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">管理資訊系統<span class="scm-cr">3</span></div>
+            <div class="scm-ci">行銷管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">運輸管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">企業資源規劃<span class="scm-cr">3</span></div>
+            <div class="scm-ci">成本管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">財務管理<span class="scm-cr">3</span></div>
+          </div>
         </div>
-
-        <div class="marquee" aria-hidden="true">
-          <div class="marquee-track">
-            <div class="marquee-item"><span class="marquee-dot"></span>Logistics</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Operations</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Data Analysis</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Supply Chain Finance</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Smart Manufacturing</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Cold Chain</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Semiconductor SCM</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Research Methods</div>
-
-            <div class="marquee-item"><span class="marquee-dot"></span>Logistics</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Operations</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Data Analysis</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Supply Chain Finance</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Smart Manufacturing</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Cold Chain</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Semiconductor SCM</div>
-            <div class="marquee-item"><span class="marquee-dot"></span>Research Methods</div>
+        <div class="scm-card yr3">
+          <div class="scm-card-head"><span class="scm-hd"></span>三年級</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">綠色供應鏈<span class="scm-cr">3</span></div>
+            <div class="scm-ci">水產供應鏈<span class="scm-cr">3</span></div>
+            <div class="scm-ci">全面品質管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">實務專題（一）<span class="scm-cr">2</span></div>
+            <div class="scm-ci">實務專題（二）<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+        <div class="scm-card yr4">
+          <div class="scm-card-head"><span class="scm-hd"></span>四年級</div>
+          <div class="scm-card-body">
+            <div class="scm-ci" style="font-size:12px;color:var(--muted);font-style:italic">依選修規劃修讀</div>
           </div>
         </div>
       </div>
 
-      <!-- TABS -->
-      <div class="scm-tabs">
-        <button class="scm-tab active" onclick="scmTab(this,'scm-bsc')">🎓 四技（大學部）</button>
-        <button class="scm-tab" onclick="scmTab(this,'scm-msc')">📚 碩士</button>
-      </div>
-
-      <!-- ═══ 四技部 ═══ -->
-      <div id="scm-bsc" class="scm-panel active">
-
-        <div class="scm-cbar">
-          <div class="scm-cbar-item cb-total"><div class="scm-cn">128</div><div class="scm-cl">畢業總學分</div></div>
-          <div class="scm-cbar-item cb-blue"> <div class="scm-cn">28</div> <div class="scm-cl">校訂共同必修</div></div>
-          <div class="scm-cbar-item cb-green"><div class="scm-cn">64</div> <div class="scm-cl">系專業必修</div></div>
-          <div class="scm-cbar-item cb-amber"><div class="scm-cn">36</div> <div class="scm-cl">系專業選修</div></div>
-        </div>
-
-        <div class="scm-sec">系專業必修課程 · 64 學分</div>
-        <div class="scm-yr-grid">
-          <div class="scm-card yr1">
-            <div class="scm-card-head"><span class="scm-hd"></span>一年級</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">供應鏈概論<span class="scm-cr">3</span></div>
-              <div class="scm-ci">會計學<span class="scm-cr">3</span></div>
-              <div class="scm-ci">微積分<span class="scm-cr">3</span></div>
-              <div class="scm-ci">管理軟體概論<span class="scm-cr">3</span></div>
-              <div class="scm-ci">統計學<span class="scm-cr">3</span></div>
-              <div class="scm-ci">經濟學<span class="scm-cr">3</span></div>
-              <div class="scm-ci">生產與作業管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">作業研究<span class="scm-cr">3</span></div>
-              <div class="scm-ci">管理學（院共同必修）<span class="scm-cr">3</span></div>
-            </div>
-          </div>
-          <div class="scm-card yr2">
-            <div class="scm-card-head"><span class="scm-hd"></span>二年級</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">存貨管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">採購管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">管理資訊系統<span class="scm-cr">3</span></div>
-              <div class="scm-ci">行銷管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">運輸管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">企業資源規劃<span class="scm-cr">3</span></div>
-              <div class="scm-ci">成本管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">財務管理<span class="scm-cr">3</span></div>
-            </div>
-          </div>
-          <div class="scm-card yr3">
-            <div class="scm-card-head"><span class="scm-hd"></span>三年級</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">綠色供應鏈<span class="scm-cr">3</span></div>
-              <div class="scm-ci">水產供應鏈<span class="scm-cr">3</span></div>
-              <div class="scm-ci">全面品質管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">實務專題（一）<span class="scm-cr">2</span></div>
-              <div class="scm-ci">實務專題（二）<span class="scm-cr">2</span></div>
-            </div>
-          </div>
-          <div class="scm-card yr4">
-            <div class="scm-card-head"><span class="scm-hd"></span>四年級</div>
-            <div class="scm-card-body">
-              <div class="scm-ci" style="font-size:12px;color:#94a3b8;font-style:italic">依選修規劃修讀</div>
-            </div>
+      <div class="scm-sec">系專業選修課程 · 36 學分（七大領域）</div>
+      <div class="scm-elec-grid">
+        <div class="scm-card dom-info">
+          <div class="scm-card-head">💻 資訊流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">程式設計</div><div class="scm-ci">資料庫應用</div>
+            <div class="scm-ci">物聯網應用</div><div class="scm-ci">大數據分析</div>
+            <div class="scm-ci">系統分析</div><div class="scm-ci">雲端服務</div>
           </div>
         </div>
-
-        <div class="scm-sec">系專業選修課程 · 36 學分（七大領域）</div>
-        <div class="scm-elec-grid">
-          <div class="scm-card dom-info">
-            <div class="scm-card-head">💻 資訊流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">程式設計</div><div class="scm-ci">資料庫應用</div>
-              <div class="scm-ci">物聯網應用</div><div class="scm-ci">大數據分析</div>
-              <div class="scm-ci">系統分析</div><div class="scm-ci">雲端服務</div>
-            </div>
-          </div>
-          <div class="scm-card dom-logi">
-            <div class="scm-card-head">🚚 物流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">物流管理</div><div class="scm-ci">倉儲管理</div>
-              <div class="scm-ci">永續運輸與物流</div><div class="scm-ci">港埠貨櫃作業</div>
-              <div class="scm-ci">貨運承攬與通關作業</div>
-            </div>
-          </div>
-          <div class="scm-card dom-fin">
-            <div class="scm-card-head">💰 金流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">財務報表分析</div><div class="scm-ci">供應鏈金融</div>
-              <div class="scm-ci">貨幣銀行學</div><div class="scm-ci">國際貿易</div>
-            </div>
-          </div>
-          <div class="scm-card dom-com">
-            <div class="scm-card-head">🛒 商流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">談判與衝突管理</div><div class="scm-ci">電子商務</div>
-              <div class="scm-ci">流通管理</div><div class="scm-ci">企劃實務</div>
-              <div class="scm-ci">零售管理</div><div class="scm-ci">關係管理</div>
-              <div class="scm-ci">策略管理</div><div class="scm-ci">網路行銷</div>
-              <div class="scm-ci">人力運籌</div><div class="scm-ci">服務與作業管理</div>
-              <div class="scm-ci">綠色行銷 · 綠色包裝</div>
-            </div>
-          </div>
-          <div class="scm-card dom-mfg">
-            <div class="scm-card-head">🏭 生產製造領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">供應鏈發展</div><div class="scm-ci">應用統計</div>
-              <div class="scm-ci">供應端管理</div><div class="scm-ci">安全管理</div>
-              <div class="scm-ci">需求預測</div><div class="scm-ci">產業智慧化</div>
-              <div class="scm-ci">專案管理</div><div class="scm-ci">緊急運籌</div>
-              <div class="scm-ci">風險管理</div>
-            </div>
-          </div>
-          <div class="scm-card dom-aqua">
-            <div class="scm-card-head">🐟 水產供應鏈領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">冷鏈管理</div>
-              <div class="scm-ci">水產品銷售</div>
-              <div class="scm-ci">水產品處理</div>
-            </div>
-          </div>
-          <div class="scm-card dom-semi">
-            <div class="scm-card-head">💡 半導體供應鏈領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">科技產業分析</div>
-              <div class="scm-ci">RFID</div>
-              <div class="scm-ci">永續發展</div>
-              <div class="scm-ci">半導體製造執行系統</div>
-            </div>
+        <div class="scm-card dom-logi">
+          <div class="scm-card-head">🚚 物流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">物流管理</div><div class="scm-ci">倉儲管理</div>
+            <div class="scm-ci">永續運輸與物流</div><div class="scm-ci">港埠貨櫃作業</div>
+            <div class="scm-ci">貨運承攬與通關作業</div>
           </div>
         </div>
-
-        <div class="scm-arrow">
-          <span>有利生涯發展領域專業必選修課程</span>
-          <div class="scm-arr-wrap"><div class="scm-arr-line"></div><div class="scm-arr-head"></div></div>
-        </div>
-
-        <div class="scm-sec">生涯發展路徑</div>
-        <div class="scm-career-grid">
-          <div class="scm-card ca0">
-            <div class="scm-career-head">🎓<br>升學</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">管理學</div><div class="scm-cc">經濟學</div>
-              <div class="scm-cc">統計學</div><div class="scm-cc">物流管理</div>
-              <div class="scm-cc">存貨管理</div><div class="scm-cc">作業研究</div>
-              <div class="scm-cc">行銷管理</div><div class="scm-cc">科技產業分析</div>
-              <div class="scm-cc">實務專題</div>
-            </div>
-          </div>
-          <div class="scm-card ca1">
-            <div class="scm-career-head">📋<br>企劃行政人員</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">管理學</div><div class="scm-cc">統計學</div>
-              <div class="scm-cc">物流管理</div><div class="scm-cc">科技產業分析</div>
-              <div class="scm-cc">全面品質管理</div><div class="scm-cc">行銷管理</div>
-              <div class="scm-cc">存貨管理</div><div class="scm-cc">實務專題</div>
-              <div class="scm-cc">企劃實務</div>
-            </div>
-          </div>
-          <div class="scm-card ca2">
-            <div class="scm-career-head">📦<br>運籌/採購/<br>倉儲物流</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">物流管理</div><div class="scm-cc">倉儲管理</div>
-              <div class="scm-cc">存貨管理</div><div class="scm-cc">冷鏈管理</div>
-              <div class="scm-cc">緊急運籌</div><div class="scm-cc">供應鏈概論</div>
-              <div class="scm-cc">安全管理</div><div class="scm-cc">成本管理</div>
-              <div class="scm-cc">綠色供應鏈</div><div class="scm-cc">永續運輸與物流</div>
-              <div class="scm-cc">物聯網應用</div><div class="scm-cc">管理軟體概論</div>
-            </div>
-          </div>
-          <div class="scm-card ca3">
-            <div class="scm-career-head">🏗️<br>生產管理/<br>流通管理</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">存貨管理</div><div class="scm-cc">倉儲管理</div>
-              <div class="scm-cc">冷鏈管理</div><div class="scm-cc">運輸管理</div>
-              <div class="scm-cc">行銷管理</div><div class="scm-cc">安全管理</div>
-              <div class="scm-cc">全面品質管理</div><div class="scm-cc">緊急運籌</div>
-              <div class="scm-cc">供應鏈概論</div><div class="scm-cc">綠色供應鏈</div>
-            </div>
-          </div>
-          <div class="scm-card ca4">
-            <div class="scm-career-head">🏪<br>門市經營人員</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">物流管理</div><div class="scm-cc">倉儲管理</div>
-              <div class="scm-cc">存貨管理</div><div class="scm-cc">安全管理</div>
-              <div class="scm-cc">零售管理</div><div class="scm-cc">全面品質管理</div>
-              <div class="scm-cc">企劃實務</div><div class="scm-cc">電子商務</div>
-              <div class="scm-cc">實務專題</div>
-            </div>
-          </div>
-          <div class="scm-card ca5">
-            <div class="scm-career-head">🚢<br>通關貿易人員</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">物流管理</div><div class="scm-cc">存貨管理</div>
-              <div class="scm-cc">運輸管理</div><div class="scm-cc">供應鏈概論</div>
-              <div class="scm-cc">品質管理</div><div class="scm-cc">實務專題</div>
-            </div>
-          </div>
-          <div class="scm-card ca6">
-            <div class="scm-career-head">🖥️<br>科技供應鏈</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">管理軟體概論</div><div class="scm-cc">物聯網應用</div>
-              <div class="scm-cc">大數據分析</div><div class="scm-cc">系統分析</div>
-              <div class="scm-cc">雲端服務</div><div class="scm-cc">RFID</div>
-              <div class="scm-cc">科技產業分析</div><div class="scm-cc">半導體製造執行系統</div>
-              <div class="scm-cc">產業智慧化</div><div class="scm-cc">企業資源規劃</div>
-              <div class="scm-cc">管理資訊系統</div>
-            </div>
-          </div>
-          <div class="scm-card ca7">
-            <div class="scm-career-head">🐟<br>海洋供應鏈</div>
-            <div class="scm-career-body">
-              <div class="scm-cc">水產供應鏈</div><div class="scm-cc">冷鏈管理</div>
-              <div class="scm-cc">水產品處理</div><div class="scm-cc">水產品銷售</div>
-              <div class="scm-cc">綠色供應鏈</div><div class="scm-cc">永續運輸與物流</div>
-              <div class="scm-cc">港埠貨櫃作業</div><div class="scm-cc">貨運承攬與通關作業</div>
-              <div class="scm-cc">倉儲管理</div><div class="scm-cc">永續發展</div>
-              <div class="scm-cc">供應鏈金融</div>
-            </div>
+        <div class="scm-card dom-fin">
+          <div class="scm-card-head">💰 金流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">財務報表分析</div><div class="scm-ci">供應鏈金融</div>
+            <div class="scm-ci">貨幣銀行學</div><div class="scm-ci">國際貿易</div>
           </div>
         </div>
-
-        <div class="scm-note">
-          <p>
-            <strong>畢業條件：</strong>總學分 128 分 ｜ 系專業必修 64 學分 ｜ 系專業選修 36 學分（本地生最多承認外系 12 學分）<br>
-            須取得系上認可之 <strong>二張專業證照</strong> ｜ 通過 <strong>英語畢業門檻</strong>（CEFR B1 以上）<br>
-            暑期實習 2 學分，實習時數累計不低於 <strong>320 小時</strong>
-          </p>
+        <div class="scm-card dom-com">
+          <div class="scm-card-head">🛒 商流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">談判與衝突管理</div><div class="scm-ci">電子商務</div>
+            <div class="scm-ci">流通管理</div><div class="scm-ci">企劃實務</div>
+            <div class="scm-ci">零售管理</div><div class="scm-ci">關係管理</div>
+            <div class="scm-ci">策略管理</div><div class="scm-ci">網路行銷</div>
+            <div class="scm-ci">人力運籌</div><div class="scm-ci">服務與作業管理</div>
+            <div class="scm-ci">綠色行銷 · 綠色包裝</div>
+          </div>
+        </div>
+        <div class="scm-card dom-mfg">
+          <div class="scm-card-head">🏭 生產製造領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">供應鏈發展</div><div class="scm-ci">應用統計</div>
+            <div class="scm-ci">供應端管理</div><div class="scm-ci">安全管理</div>
+            <div class="scm-ci">需求預測</div><div class="scm-ci">產業智慧化</div>
+            <div class="scm-ci">專案管理</div><div class="scm-ci">緊急運籌</div>
+            <div class="scm-ci">風險管理</div>
+          </div>
+        </div>
+        <div class="scm-card dom-aqua">
+          <div class="scm-card-head">🐟 水產供應鏈領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">冷鏈管理</div>
+            <div class="scm-ci">水產品銷售</div>
+            <div class="scm-ci">水產品處理</div>
+          </div>
+        </div>
+        <div class="scm-card dom-semi">
+          <div class="scm-card-head">💡 半導體供應鏈領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">科技產業分析</div>
+            <div class="scm-ci">RFID</div>
+            <div class="scm-ci">永續發展</div>
+            <div class="scm-ci">半導體製造執行系統</div>
+          </div>
         </div>
       </div>
 
-      <!-- ═══ 碩士班 ═══ -->
-      <div id="scm-msc" class="scm-panel">
+      <div class="scm-arrow">
+        <span>有利生涯發展領域專業必選修課程</span>
+        <div class="scm-arr-wrap"><div class="scm-arr-line"></div><div class="scm-arr-head"></div></div>
+      </div>
 
-        <div class="scm-cbar">
-          <div class="scm-cbar-item cb-total"><div class="scm-cn">36</div><div class="scm-cl">畢業總學分</div></div>
-          <div class="scm-cbar-item cb-green"><div class="scm-cn">12</div><div class="scm-cl">專業必修</div></div>
-          <div class="scm-cbar-item cb-amber"><div class="scm-cn">24</div><div class="scm-cl">專業選修</div></div>
-          <div class="scm-cbar-item cb-blue"> <div class="scm-cn">6</div><div class="scm-cl">論文學分</div></div>
-        </div>
-
-        <div class="scm-sec">專業必修課程 · 12 學分</div>
-        <div class="scm-must-row">
-          <div class="scm-card yr1">
-            <div class="scm-card-head"><span class="scm-hd"></span>一年級 — 核心課程</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">供應鏈管理<span class="scm-cr">3</span></div>
-              <div class="scm-ci">研究方法<span class="scm-cr">3</span></div>
-            </div>
-          </div>
-          <div class="scm-card yr3">
-            <div class="scm-card-head"><span class="scm-hd"></span>二年級 — 論文</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">論文<span class="scm-cr">6</span></div>
-              <div class="scm-ci">論文<span class="scm-cr">6</span></div>
-              <div class="scm-ci" style="font-size:11px;color:#94a3b8">擇一學期修讀，通過學位考試方式登錄</div>
-            </div>
+      <div class="scm-sec">生涯發展路徑</div>
+      <div class="scm-career-grid">
+        <div class="scm-card ca0">
+          <div class="scm-career-head">🎓<br>升學</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">管理學</div><div class="scm-cc">經濟學</div>
+            <div class="scm-cc">統計學</div><div class="scm-cc">物流管理</div>
+            <div class="scm-cc">存貨管理</div><div class="scm-cc">作業研究</div>
+            <div class="scm-cc">行銷管理</div><div class="scm-cc">科技產業分析</div>
+            <div class="scm-cc">實務專題</div>
           </div>
         </div>
-
-        <div class="scm-sec">專業選修課程 · 24 學分（七大領域）</div>
-        <div class="scm-elec-grid">
-          <div class="scm-card dom-res">
-            <div class="scm-card-head">🔬 研究方法領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">質的分析<span class="scm-cr">2</span></div>
-              <div class="scm-ci">統計分析<span class="scm-cr">2</span></div>
-              <div class="scm-ci">多變量分析<span class="scm-cr">2</span></div>
-            </div>
-          </div>
-          <div class="scm-card dom-info">
-            <div class="scm-card-head">💻 資訊流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">資訊流管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">資料探勘<span class="scm-cr">2</span></div>
-              <div class="scm-ci">系統分析與設計<span class="scm-cr">2</span></div>
-            </div>
-          </div>
-          <div class="scm-card dom-logi">
-            <div class="scm-card-head">🚚 物流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">物流管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">運輸與物流資料分析<span class="scm-cr">2</span></div>
-              <div class="scm-ci">港埠貨櫃作業專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">智慧運輸與物流<span class="scm-cr">2</span></div>
-            </div>
-          </div>
-          <div class="scm-card dom-com">
-            <div class="scm-card-head">🛒 商流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">商流管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">關係管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">智慧商務<span class="scm-cr">2</span></div>
-              <div class="scm-ci">策略管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">零售管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">流通產業分析<span class="scm-cr">2</span></div>
-              <div class="scm-ci">國際貿易專題<span class="scm-cr">2</span></div>
-            </div>
-          </div>
-          <div class="scm-card dom-fin">
-            <div class="scm-card-head">💰 金流領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">金流管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">企業財務分析<span class="scm-cr">2</span></div>
-              <div class="scm-ci">供應鏈金融專題<span class="scm-cr">2</span></div>
-            </div>
-          </div>
-          <div class="scm-card dom-mfg">
-            <div class="scm-card-head">🏭 製造部門領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">生產管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">採購管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">供應鏈安全管理專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">風險管理專題<span class="scm-cr">2</span></div>
-            </div>
-          </div>
-          <div class="scm-card dom-aqua">
-            <div class="scm-card-head">🌱 應用產業領域</div>
-            <div class="scm-card-body">
-              <div class="scm-ci">綠色供應鏈專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">水產供應鏈專題<span class="scm-cr">2</span></div>
-              <div class="scm-ci">冷鏈管理實務<span class="scm-cr">2</span></div>
-              <div class="scm-ci">緊急運籌專題<span class="scm-cr">2</span></div>
-            </div>
+        <div class="scm-card ca1">
+          <div class="scm-career-head">📋<br>企劃行政人員</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">管理學</div><div class="scm-cc">統計學</div>
+            <div class="scm-cc">物流管理</div><div class="scm-cc">科技產業分析</div>
+            <div class="scm-cc">全面品質管理</div><div class="scm-cc">行銷管理</div>
+            <div class="scm-cc">存貨管理</div><div class="scm-cc">實務專題</div>
+            <div class="scm-cc">企劃實務</div>
           </div>
         </div>
-
-        <div class="scm-note-teal">
-          <p>
-            <strong>畢業條件：</strong>總學分 36 分 ｜ 必修 12 學分 ｜ 選修 24 學分（本地生最多承認外系 6 學分）<br>
-            完成論文著作，通過 <strong>學位論文口試</strong> ｜ 通過 <strong>英語能力標準檢定</strong> 後方可提出口試<br>
-            在學期間須修畢至少 <strong>一門全英語課程</strong>
-          </p>
+        <div class="scm-card ca2">
+          <div class="scm-career-head">📦<br>運籌/採購/<br>倉儲物流</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">物流管理</div><div class="scm-cc">倉儲管理</div>
+            <div class="scm-cc">存貨管理</div><div class="scm-cc">冷鏈管理</div>
+            <div class="scm-cc">緊急運籌</div><div class="scm-cc">供應鏈概論</div>
+            <div class="scm-cc">安全管理</div><div class="scm-cc">成本管理</div>
+            <div class="scm-cc">綠色供應鏈</div><div class="scm-cc">永續運輸與物流</div>
+            <div class="scm-cc">物聯網應用</div><div class="scm-cc">管理軟體概論</div>
+          </div>
+        </div>
+        <div class="scm-card ca3">
+          <div class="scm-career-head">🏗️<br>生產管理/<br>流通管理</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">存貨管理</div><div class="scm-cc">倉儲管理</div>
+            <div class="scm-cc">冷鏈管理</div><div class="scm-cc">運輸管理</div>
+            <div class="scm-cc">行銷管理</div><div class="scm-cc">安全管理</div>
+            <div class="scm-cc">全面品質管理</div><div class="scm-cc">緊急運籌</div>
+            <div class="scm-cc">供應鏈概論</div><div class="scm-cc">綠色供應鏈</div>
+          </div>
+        </div>
+        <div class="scm-card ca4">
+          <div class="scm-career-head">🏪<br>門市經營人員</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">物流管理</div><div class="scm-cc">倉儲管理</div>
+            <div class="scm-cc">存貨管理</div><div class="scm-cc">安全管理</div>
+            <div class="scm-cc">零售管理</div><div class="scm-cc">全面品質管理</div>
+            <div class="scm-cc">企劃實務</div><div class="scm-cc">電子商務</div>
+            <div class="scm-cc">實務專題</div>
+          </div>
+        </div>
+        <div class="scm-card ca5">
+          <div class="scm-career-head">🚢<br>通關貿易人員</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">物流管理</div><div class="scm-cc">存貨管理</div>
+            <div class="scm-cc">運輸管理</div><div class="scm-cc">供應鏈概論</div>
+            <div class="scm-cc">品質管理</div><div class="scm-cc">實務專題</div>
+          </div>
+        </div>
+        <div class="scm-card ca6">
+          <div class="scm-career-head">🖥️<br>科技供應鏈</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">管理軟體概論</div><div class="scm-cc">物聯網應用</div>
+            <div class="scm-cc">大數據分析</div><div class="scm-cc">系統分析</div>
+            <div class="scm-cc">雲端服務</div><div class="scm-cc">RFID</div>
+            <div class="scm-cc">科技產業分析</div><div class="scm-cc">半導體製造執行系統</div>
+            <div class="scm-cc">產業智慧化</div><div class="scm-cc">企業資源規劃</div>
+            <div class="scm-cc">管理資訊系統</div>
+          </div>
+        </div>
+        <div class="scm-card ca7">
+          <div class="scm-career-head">🐟<br>海洋供應鏈</div>
+          <div class="scm-career-body">
+            <div class="scm-cc">水產供應鏈</div><div class="scm-cc">冷鏈管理</div>
+            <div class="scm-cc">水產品處理</div><div class="scm-cc">水產品銷售</div>
+            <div class="scm-cc">綠色供應鏈</div><div class="scm-cc">永續運輸與物流</div>
+            <div class="scm-cc">港埠貨櫃作業</div><div class="scm-cc">貨運承攬與通關作業</div>
+            <div class="scm-cc">倉儲管理</div><div class="scm-cc">永續發展</div>
+            <div class="scm-cc">供應鏈金融</div>
+          </div>
         </div>
       </div>
 
-    </div><!-- #scm-cm -->
-      <div class="magic-footer-note">Magic UI-inspired single-file HTML redesign · preserved curriculum content, upgraded visual system.</div>
-  </div><!-- .card-wrap -->
-</div><!-- .page-shell -->
+      <div class="scm-note">
+        <p>
+          <strong>畢業條件：</strong>總學分 128 分 ｜ 系專業必修 64 學分 ｜ 系專業選修 36 學分（本地生最多承認外系 12 學分）<br>
+          須取得系上認可之 <strong>二張專業證照</strong> ｜ 通過 <strong>英語畢業門檻</strong>（CEFR B1 以上）<br>
+          暑期實習 2 學分，實習時數累計不低於 <strong>320 小時</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- ═══ 碩士班 ═══ -->
+    <div id="scm-msc" class="scm-panel">
+
+      <div class="scm-cbar">
+        <div class="scm-cbar-item cb-total"><div class="scm-cn">36</div><div class="scm-cl">畢業總學分</div></div>
+        <div class="scm-cbar-item cb-green"><div class="scm-cn">12</div><div class="scm-cl">專業必修</div></div>
+        <div class="scm-cbar-item cb-amber"><div class="scm-cn">24</div><div class="scm-cl">專業選修</div></div>
+        <div class="scm-cbar-item cb-blue"> <div class="scm-cn">6</div><div class="scm-cl">論文學分</div></div>
+      </div>
+
+      <div class="scm-sec">專業必修課程 · 12 學分</div>
+      <div class="scm-must-row">
+        <div class="scm-card yr1">
+          <div class="scm-card-head"><span class="scm-hd"></span>一年級 — 核心課程</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">供應鏈管理<span class="scm-cr">3</span></div>
+            <div class="scm-ci">研究方法<span class="scm-cr">3</span></div>
+          </div>
+        </div>
+        <div class="scm-card yr3">
+          <div class="scm-card-head"><span class="scm-hd"></span>二年級 — 論文</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">論文<span class="scm-cr">6</span></div>
+            <div class="scm-ci">論文<span class="scm-cr">6</span></div>
+            <div class="scm-ci" style="font-size:11px;color:var(--muted)">擇一學期修讀，通過學位考試方式登錄</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scm-sec">專業選修課程 · 24 學分（七大領域）</div>
+      <div class="scm-elec-grid">
+        <div class="scm-card dom-res">
+          <div class="scm-card-head">🔬 研究方法領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">質的分析<span class="scm-cr">2</span></div>
+            <div class="scm-ci">統計分析<span class="scm-cr">2</span></div>
+            <div class="scm-ci">多變量分析<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+        <div class="scm-card dom-info">
+          <div class="scm-card-head">💻 資訊流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">資訊流管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">資料探勘<span class="scm-cr">2</span></div>
+            <div class="scm-ci">系統分析與設計<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+        <div class="scm-card dom-logi">
+          <div class="scm-card-head">🚚 物流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">物流管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">運輸與物流資料分析<span class="scm-cr">2</span></div>
+            <div class="scm-ci">港埠貨櫃作業專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">智慧運輸與物流<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+        <div class="scm-card dom-com">
+          <div class="scm-card-head">🛒 商流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">商流管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">關係管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">智慧商務<span class="scm-cr">2</span></div>
+            <div class="scm-ci">策略管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">零售管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">流通產業分析<span class="scm-cr">2</span></div>
+            <div class="scm-ci">國際貿易專題<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+        <div class="scm-card dom-fin">
+          <div class="scm-card-head">💰 金流領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">金流管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">企業財務分析<span class="scm-cr">2</span></div>
+            <div class="scm-ci">供應鏈金融專題<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+        <div class="scm-card dom-mfg">
+          <div class="scm-card-head">🏭 製造部門領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">生產管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">採購管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">供應鏈安全管理專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">風險管理專題<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+        <div class="scm-card dom-aqua">
+          <div class="scm-card-head">🌱 應用產業領域</div>
+          <div class="scm-card-body">
+            <div class="scm-ci">綠色供應鏈專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">水產供應鏈專題<span class="scm-cr">2</span></div>
+            <div class="scm-ci">冷鏈管理實務<span class="scm-cr">2</span></div>
+            <div class="scm-ci">緊急運籌專題<span class="scm-cr">2</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scm-note-teal">
+        <p>
+          <strong>畢業條件：</strong>總學分 36 分 ｜ 必修 12 學分 ｜ 選修 24 學分（本地生最多承認外系 6 學分）<br>
+          完成論文著作，通過 <strong>學位論文口試</strong> ｜ 通過 <strong>英語能力標準檢定</strong> 後方可提出口試<br>
+          在學期間須修畢至少 <strong>一門全英語課程</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="scm-footer-note">國立高雄科技大學 供應鏈管理系 · Department of Supply Chain Management, NKUST</div>
+  </div>
+</div>
 
 <script>
 function scmTab(btn, panelId) {
-  document.querySelectorAll('#scm-cm .scm-tab').forEach(function(t){ t.classList.remove('active') });
-  document.querySelectorAll('#scm-cm .scm-panel').forEach(function(p){ p.classList.remove('active') });
+  var wrap = document.getElementById('scm-cm-wrap');
+  wrap.querySelectorAll('.scm-tab').forEach(function(t){ t.classList.remove('active') });
+  wrap.querySelectorAll('.scm-panel').forEach(function(p){ p.classList.remove('active') });
   btn.classList.add('active');
   document.getElementById(panelId).classList.add('active');
 }
 </script>
-</body>
-</html>
